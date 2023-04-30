@@ -4,9 +4,10 @@ from dataload import load_diabetes_data
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, roc_auc_score, f1_score, recall_score
 
+
 class DYCCTSCLPL():
 
-    def __init__(self, model, th_rate=10, iter=10, random_seed = 7, factor = 2, std_bound = 0.12):
+    def __init__(self, model, th_rate=10, iter=10, random_seed=7, factor=2, std_bound=0.12):
 
         self.model = model
         self.th_rate = th_rate
@@ -23,7 +24,7 @@ class DYCCTSCLPL():
         self.model.fit(d_l, y_l)
 
         ## randomly partition the unlabeled data
-        d_ul_1, d_ul_2 = train_test_split(d_ul, test_size=1/2, random_state=self.random_seed)
+        d_ul_1, d_ul_2 = train_test_split(d_ul, test_size=1 / 2, random_state=self.random_seed)
 
         # iteration
         for i in range(self.iter):
@@ -62,7 +63,6 @@ class DYCCTSCLPL():
             for k in range(pseudo_labels_prob.shape[0]):
                 label = pseudo_labels_prob[k].argmax()
                 if pseudo_labels_prob[k][label] >= th:
-
                     d_l = np.vstack((d_l, d_ul_new[k]))
                     y_l = np.hstack((y_l, np.asarray(label)))
                     index.append(k)
@@ -85,11 +85,11 @@ class DYCCTSCLPL():
     def predict_proba(self, X):
         return self.model.predict_proba(X)
 
-if __name__=='__main__':
 
-    d_l, y_l, d_ul, d_test, y_test, _ , _ = load_diabetes_data(label_data_rate=0.1)
+if __name__ == '__main__':
+    d_l, y_l, d_ul, d_test, y_test, _, _ = load_diabetes_data(label_data_rate=0.1)
     # build model
-    clpl_cls = DYCCTSCLPL(model = LGBMClassifier(random_state = 666))
+    clpl_cls = DYCCTSCLPL(model=LGBMClassifier(random_state=666))
     clpl_cls.fit(d_l, y_l, d_ul)
     # predict
     y_pre = clpl_cls.predict_proba(d_test)

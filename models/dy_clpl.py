@@ -6,9 +6,10 @@ from lightgbm import LGBMClassifier
 from dataload import load_diabetes_data
 from sklearn.metrics import accuracy_score, roc_auc_score, f1_score, recall_score
 
+
 class DYCLPL():
 
-    def __init__(self, model, th_rate=10, iter=10, random_seed = 7, factor = 2, std_bound = 0.12):
+    def __init__(self, model, th_rate=10, iter=10, random_seed=7, factor=2, std_bound=0.12):
 
         self.model = model
         self.th_rate = th_rate
@@ -24,7 +25,7 @@ class DYCLPL():
         self.model.fit(d_l, y_l)
         # iteration
         for i in range(self.iter):
-            if len(d_ul)  == 0:
+            if len(d_ul) == 0:
                 break
             max_values = []
             index = []
@@ -66,11 +67,11 @@ class DYCLPL():
     def predict_proba(self, X):
         return self.model.predict_proba(X)
 
-if __name__=='__main__':
 
-    d_l, y_l, d_ul, d_test, y_test, _ , _ = load_diabetes_data(label_data_rate=0.1)
+if __name__ == '__main__':
+    d_l, y_l, d_ul, d_test, y_test, _, _ = load_diabetes_data(label_data_rate=0.1)
     # build model
-    clpl_cls = DYCLPL(model = LGBMClassifier())
+    clpl_cls = DYCLPL(model=LGBMClassifier())
     clpl_cls.fit(d_l, y_l, d_ul)
     # predict
     y_pre = clpl_cls.predict_proba(d_test)
@@ -80,5 +81,3 @@ if __name__=='__main__':
     f1 = f1_score(y_test, np.argmax(y_pre, axis=1))
     recall = recall_score(y_test, np.argmax(y_pre, axis=1))
     print('accuracy: {} - auc: {} - f1 score: {} - recall: {}'.format(acc, auc, f1, recall))
-
-

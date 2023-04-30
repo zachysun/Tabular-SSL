@@ -1,8 +1,4 @@
-import torch.nn.functional as F
-import torch
-import numpy as np
 import pandas as pd
-from utils import matrix2vec, eval
 from dataload import load_diabetes_data
 
 from models.clpl import CLPL

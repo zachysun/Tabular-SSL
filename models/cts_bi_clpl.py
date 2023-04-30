@@ -4,9 +4,10 @@ from dataload import load_diabetes_data
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, roc_auc_score, f1_score, recall_score
 
+
 class CTSBICLPL():
 
-    def __init__(self, model, th_rate=10, iter=10, random_seed = 7, start_th = 50):
+    def __init__(self, model, th_rate=10, iter=10, random_seed=7, start_th=50):
 
         self.model = model
         self.th_rate = th_rate
@@ -26,10 +27,10 @@ class CTSBICLPL():
         self.model.fit(d_l, y_l)
 
         ## randomly partition the unlabeled data
-        d_ul_1, d_ul_2 = train_test_split(d_ul, test_size=1/2, random_state=self.random_seed)
+        d_ul_1, d_ul_2 = train_test_split(d_ul, test_size=1 / 2, random_state=self.random_seed)
 
         # iteration
-        for i in range(self.iter+1):
+        for i in range(self.iter + 1):
             if d_ul_1.shape[0] == 0 or d_ul_2.shape[0] == 0:
                 break
             ## odd or even
@@ -90,11 +91,11 @@ class CTSBICLPL():
     def predict_proba(self, X):
         return self.model.predict_proba(X)
 
-if __name__=='__main__':
 
-    d_l, y_l, d_ul, d_test, y_test, _ , _ = load_diabetes_data(label_data_rate=0.2)
+if __name__ == '__main__':
+    d_l, y_l, d_ul, d_test, y_test, _, _ = load_diabetes_data(label_data_rate=0.2)
     # build model
-    clpl_cls = CTSBICLPL(model = LGBMClassifier())
+    clpl_cls = CTSBICLPL(model=LGBMClassifier())
     clpl_cls.fit(d_l, y_l, d_ul)
     # predict
     y_pre = clpl_cls.predict_proba(d_test)

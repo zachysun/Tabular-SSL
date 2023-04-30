@@ -57,8 +57,8 @@ class CCTSCLPL():
             for k in range(pseudo_labels_prob.shape[0]):
                 label = pseudo_labels_prob[k].argmax()
                 if pseudo_labels_prob[k][label] >= th:
-                    d_l_1 = np.vstack((d_l, d_ul_new[k]))
-                    y_l_1 = np.hstack((y_l, np.asarray(label)))
+                    d_l = np.vstack((d_l, d_ul_new[k]))
+                    y_l = np.hstack((y_l, np.asarray(label)))
                     index.append(k)
 
             if i % 2 == 1:

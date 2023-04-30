@@ -75,10 +75,6 @@ class confi():
             X = X[indices]
             y = y[indices]
 
-            # Refresh
-            # self.upper_threshold = self.upper_threshold + 0.09
-            # self.lower_threshold = self.lower_threshold - 0.09
-
     def predict(self, X):
         return self.model.predict(X)
 
