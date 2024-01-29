@@ -46,6 +46,7 @@
 #### Notes:
 
 - Data link for test [PIMA](https://www.kaggle.com/datasets/uciml/pima-indians-diabetes-database)
+- "**ccts**" means "labeled samples are trained together"; "**cts**" means "labeled samples are divided into two parts and trained separately."
 
 ---
 
